@@ -1,0 +1,318 @@
+/* 1. Global Styles & Theme Variables */
+:root {
+    --primary-color: #27ae60;
+    --secondary-color: #2980b9;
+    --accent-color: #f39c12;
+    --danger-color: #c0392b;
+    --bg-color: #f4f6f9;
+    --card-bg-color: #ffffff;
+    --text-color: #34495e;
+    --border-color: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --sidebar-width: 280px;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a2e;
+    --card-bg-color: #16213e;
+    --text-color: #e0e0e0;
+    --border-color: #2a3b5c;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 2. Top Navigation Bar */
+.top-nav {
+    background-color: var(--card-bg-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 60px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    z-index: 10;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.nav-menu a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.nav-menu a:hover, .nav-menu a.active {
+    color: var(--primary-color);
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* 3. Main Content Layout (Sidebar + Dashboard) */
+.main-content {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* 4. Sidebar Styling */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--card-bg-color);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.sidebar-panel {
+    margin-bottom: 20px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.panel-content {
+    padding-top: 15px;
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+.panel-content.collapsed {
+    max-height: 0;
+    padding-top: 0;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 5px;
+}
+
+.farm-list {
+    padding-left: 0;
+}
+
+.farm-list li {
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 5px;
+    transition: background-color 0.2s;
+}
+.farm-list li:hover, .farm-list li.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.layer-list label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* 5. Dashboard Grid & Cards */
+.dashboard {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    grid-template-areas:
+        "stat1 stat2 stat3 weather"
+        "map map overview overview"
+        "chart1 chart1 chart2 chart2"
+        "claims claims claims claims";
+}
+
+.card {
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+/* Specific Grid Area Placements */
+#stat-card-1 { grid-area: stat1; }
+#stat-card-2 { grid-area: stat2; }
+#stat-card-3 { grid-area: stat3; }
+#weather-widget { grid-area: weather; }
+#map-container { grid-area: map; }
+#overview-container { grid-area: overview; }
+#yield-chart-container { grid-area: chart1; }
+#damage-chart-container { grid-area: chart2; }
+#claims-section { grid-area: claims; }
+
+/* Stat Widgets */
+.stat-card {
+    display: flex;
+    align-items: center;
+}
+.stat-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+    color: var(--primary-color);
+}
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+.stat-label {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+/* Weather Widget */
+.weather-info {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+.weather-info i {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+}
+
+/* Map Placeholder */
+#map-placeholder {
+    width: 100%;
+    height: 400px;
+    background-color: #a2d9ce;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #1e8449;
+    overflow: hidden;
+    border: 2px solid var(--border-color);
+}
+.farm-boundary {
+    position: absolute;
+    border: 2px dashed var(--danger-color);
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s, border 0.3s;
+    cursor: pointer;
+}
+.farm-boundary:hover, .farm-boundary.highlighted {
+    background-color: rgba(243, 156, 18, 0.5);
+    border: 3px solid var(--accent-color);
+}
+#farm-1-map { top: 10%; left: 5%; width: 30%; height: 40%; }
+#farm-2-map { top: 20%; left: 45%; width: 50%; height: 60%; }
+#farm-3-map { top: 60%; left: 15%; width: 25%; height: 30%; }
+
+/* Farm Overview */
+#overview-container .overview-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    height: 100%;
+}
+.overview-card {
+    background-color: var(--bg-color);
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 4px solid var(--secondary-color);
+}
+.overview-card h4 {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+.overview-card p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Claims Section */
+#claims-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#claims-table th, #claims-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+#claims-table th {
+    font-weight: bold;
+    background-color: var(--bg-color);
+}
+.status {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    font-size: 0.8rem;
+}
+.status-approved { background-color: var(--primary-color); }
+.status-pending { background-color: var(--accent-color); }
+.status-rejected { background-color: var(--danger-color); }
+
+.action-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.action-btn:hover {
+    opacity: 0.9;
+}

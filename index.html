@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSight - AI-Driven Farm Dashboard</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="top-nav">
+            <div class="logo">🌽 AgriSight</div>
+            <div class="nav-menu">
+                <a href="#" class="active">Dashboard</a>
+                <a href="#">Reports</a>
+                <a href="#">Claims</a>
+                <a href="#">Settings</a>
+            </div>
+            <button id="theme-toggle" title="Toggle Dark/Light Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="sidebar-panel">
+                    <div class="panel-header" data-toggle="farm-list-content">
+                        <span><i class="fas fa-tractor"></i> Farm Selection</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div id="farm-list-content" class="panel-content">
+                        <input type="text" id="farm-search" class="search-bar" placeholder="Search farms...">
+                        <ul class="farm-list" id="farm-list">
+                            </ul>
+                    </div>
+                </div>
+
+                <div class="sidebar-panel">
+                    <div class="panel-header" data-toggle="layers-content">
+                        <span><i class="fas fa-layer-group"></i> Map Layers</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div id="layers-content" class="panel-content">
+                        <div class="layer-list">
+                            <label><input type="checkbox" checked> Yield Heatmap</label>
+                            <label><input type="checkbox"> Damage Heatmap</label>
+                            <label><input type="checkbox"> Crop Stress Indicators</label>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="dashboard" id="main-dashboard">
+                
+                <div class="card stat-card" id="stat-card-1">
+                    <div class="stat-icon"><i class="fas fa-th-large"></i></div>
+                    <div>
+                        <div class="stat-value" id="total-farms-stat">3</div>
+                        <div class="stat-label">Total Farms</div>
+                    </div>
+                </div>
+                <div class="card stat-card" id="stat-card-2">
+                    <div class="stat-icon"><i class="fas fa-chart-area"></i></div>
+                    <div>
+                        <div class="stat-value" id="area-covered-stat">1250</div>
+                        <div class="stat-label">Area Covered (ha)</div>
+                    </div>
+                </div>
+                <div class="card stat-card" id="stat-card-3">
+                    <div class="stat-icon"><i class="fas fa-seedling"></i></div>
+                    <div>
+                        <div class="stat-value" id="avg-yield-stat">8.2</div>
+                        <div class="stat-label">Avg. Yield (t/ha)</div>
+                    </div>
+                </div>
+
+                <div class="card" id="weather-widget">
+                    <div class="card-title">Local Weather</div>
+                    <div class="weather-info">
+                        <div><i class="fas fa-thermometer-half"></i><p>28°C</p></div>
+                        <div><i class="fas fa-cloud-rain"></i><p>65%</p></div>
+                        <div><i class="fas fa-wind"></i><p>12 km/h</p></div>
+                    </div>
+                </div>
+
+                <div class="card" id="map-container">
+                    <div class="card-title">Farm Map</div>
+                    <div id="map-placeholder">
+                        [Interactive Map Placeholder]
+                        <div class="farm-boundary" id="farm-1-map" data-farmid="1" title="Green Valley Farms"></div>
+                        <div class="farm-boundary" id="farm-2-map" data-farmid="2" title="Sunset Acres"></div>
+                        <div class="farm-boundary" id="farm-3-map" data-farmid="3" title="Riverbend Plots"></div>
+                    </div>
+                </div>
+
+                <div class="card" id="overview-container">
+                    <div class="card-title">Farm Overview: <span id="farm-name-overview">All Farms</span></div>
+                    <div class="overview-cards">
+                        <div class="overview-card"><h4>Soil Type</h4><p id="soil-type-overview">Mixed Loam</p></div>
+                        <div class="overview-card"><h4>Crop Type</h4><p id="crop-type-overview">Corn, Wheat</p></div>
+                        <div class="overview-card"><h4>Last Irrigation</h4><p id="irrigation-overview">2025-10-20</p></div>
+                        <div class="overview-card"><h4>Fertilizer Used</h4><p id="fertilizer-overview">NPK 10-20-20</p></div>
+                    </div>
+                </div>
+
+                <div class="card" id="yield-chart-container">
+                    <div class="card-title">Historical vs. Predicted Yield</div>
+                    <canvas id="yieldChart"></canvas>
+                </div>
+                <div class="card" id="damage-chart-container">
+                    <div class="card-title">Damage Analytics</div>
+                    <canvas id="damageChart"></canvas>
+                </div>
+
+                <div class="card" id="claims-section">
+                    <div class="card-title">Active Insurance Claims</div>
+                    <table id="claims-table">
+                        <thead>
+                            <tr>
+                                <th>Claim ID</th>
+                                <th>Farm Name</th>
+                                <th>Damage Type</th>
+                                <th>Date Filed</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CL-001</td>
+                                <td>Sunset Acres</td>
+                                <td>Drought</td>
+                                <td>2025-09-15</td>
+                                <td><span class="status status-pending">Pending</span></td>
+                                <td><button class="action-btn" onclick="alert('Requesting inspection...')">Inspect</button></td>
+                            </tr>
+                            <tr>
+                                <td>CL-002</td>
+                                <td>Green Valley</td>
+                                <td>Pest Infestation</td>
+                                <td>2025-08-22</td>
+                                <td><span class="status status-approved">Approved</span></td>
+                                <td><button class="action-btn" onclick="alert('Downloading report...')">Download</button></td>
+                            </tr>
+                             <tr>
+                                <td>CL-003</td>
+                                <td>Riverbend Plots</td>
+                                <td>Flood</td>
+                                <td>2025-07-30</td>
+                                <td><span class="status status-rejected">Rejected</span></td>
+                                <td><button class="action-btn" onclick="alert('Viewing claim details...')">Details</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
